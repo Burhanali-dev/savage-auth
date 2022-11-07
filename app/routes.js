@@ -29,18 +29,30 @@ module.exports = function(app, passport, db) {
 // message board routes ===============================================================
 
     app.post('/messages', (req, res) => {
-      db.collection('messages').save({name: req.body.name, msg: req.body.msg, thumbUp: 0, thumbDown:0}, (err, result) => {
-        if (err) return console.log(err)
+      //
+      const collection = db.collection('messages');
+      collection.insertMany([{name: req.body.name, msg: req.body.msg, thumbUp: 0, thumbDown:0}])
         console.log('saved to database')
         res.redirect('/profile')
-      })
     })
 
-    app.put('/messages', (req, res) => {
+    app.put('/thumbup', (req, res) => {
+      db.collection('messages')
+      .updateOne({name: req.body.name, msg: req.body.msg}, {
+        $set: {
+          thumbUp:req.body.thumbUp + 1
+        }
+      }, {
+        sort: {_id: -1},
+        upsert: true
+      })
+      res.send(200)
+    })
+    app.put('/thumbdown', (req, res) => {
       db.collection('messages')
       .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
         $set: {
-          thumbUp:req.body.thumbUp + 1
+          thumbUp:req.body.thumbUp - 1
         }
       }, {
         sort: {_id: -1},
