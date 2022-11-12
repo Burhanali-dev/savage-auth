@@ -22,7 +22,7 @@ Array.from(thumbUp).forEach(function(element) {
         })
         .then(data => {
           console.log(data)
-          window.location.reload(true)
+          window.location.reload()
         })
       });
 });
@@ -48,7 +48,7 @@ Array.from(thumbDown).forEach(function(element) {
     })
     .then(data => {
       console.log(data)
-      window.location.reload(true)
+      window.location.reload()
     })
   });
 });
