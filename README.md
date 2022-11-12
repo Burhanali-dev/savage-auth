@@ -1,6 +1,6 @@
 ## Installation
 
-Thumbs down works thumbs up appears after a refresh 
+Thumbs up/down/trash works as opposed to before when you needed to refresh to see the tumbsup value appear
 
 1. Clone repo
 2. run `npm install`

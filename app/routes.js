@@ -28,6 +28,8 @@ module.exports = function(app, passport, db) {
 
 // message board routes ===============================================================
 
+
+
     app.post('/messages', (req, res) => {
       //
       const collection = db.collection('messages');
@@ -45,9 +47,12 @@ module.exports = function(app, passport, db) {
       }, {
         sort: {_id: -1},
         upsert: true
-      })
-      res.send(200)
+      }, (err, result) => {
+        if (err) return res.send(err)
+        res.send(result)
+      }) 
     })
+
     app.put('/thumbdown', (req, res) => {
       db.collection('messages')
       .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
